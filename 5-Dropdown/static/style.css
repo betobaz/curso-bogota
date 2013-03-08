@@ -7,9 +7,12 @@
 	padding: 10px 100px;	
 }
 
+#dropdown-button-2,
 #dropdown-button{
+	float: left;
 	width: 200px;
 	background: white;
+	margin-left: 10px;
 }
 
 .dropdown-container{
