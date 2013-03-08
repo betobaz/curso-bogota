@@ -15,7 +15,7 @@
         /* Es un shortcut de forEach en donde podemos iterar por cada elemento, en este caso queremos iterar en el elemento de data.feed.entry */
         $.each(data.feed.entry, function(i,item){
             /* listo los titulos de cada video */
-            $("<li>").text(item.title.$t).appendTo("#videos");
+            $("<li>").text(item.title.$t).appendTo("#videos ul");
             /* muestro en consola el titulo del video en cuestion */
             console.log(item.title.$t);
           });
