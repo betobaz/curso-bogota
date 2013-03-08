@@ -1,0 +1,112 @@
+<html>
+<head>
+    <script type='text/javascript' src='/static/jquery-1.9.0.js'></script>
+    <script type='text/javascript' src='/static/knockout-2.2.1.debug.js'></script>
+</head>
+<body>
+
+<div id="event">
+    <div data-bind="template: { name: 'person-template', data: data }"></div>
+</div>
+ 
+<script type="text/html" id="person-template">
+    <h3 data-bind="text: name"></h3>
+    <p>Costo: <span data-bind="text: price"></span></p>
+    <p>Incluye:</p>
+    <div data-bind="foreach: items">
+        <div data-bind="text: name"></div>
+    </div>    
+    <form data-bind="submit: addGuest">
+        <input name="name" placeholder="Quien mas va?"/>
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+    <div data-bind="foreach: guests">
+        <div>
+            <span data-bind="text: name"></span>
+            <span data-bind="click: removeGuest">x</span>
+        </div>    
+    </div>
+</script>
+ 
+<script type="text/javascript">
+    var Utils = {
+        // https://gist.github.com/1308368
+        store: function( namespace, data ) {
+            if ( arguments.length > 1 ) {
+                return localStorage.setItem( namespace, JSON.stringify( data ) );
+            } else {
+                var store = localStorage.getItem( namespace );
+                return ( store && JSON.parse( store ) ) || [];
+            }
+        }
+    };
+
+    function Guest(name) {
+        this.name = name;
+        this.removeGuest = function(guest,e){
+            window.party.data.guests.remove(guest);
+        }
+    }
+
+    function Event() {
+        var event = this;
+
+        event.namespace = "evento";
+        event.data = { 
+            name    : ko.observable(''), 
+            price   : ko.observable(0),
+            items   : ko.observableArray([]),
+            guests  : ko.observableArray([]),
+            addGuest : function(form){
+                event.data.guests.push(new Guest (form.name.value) );
+
+                event.persist();
+                form.name.value = '';
+            }
+        };
+
+        event.persist = function(){
+            var json = this.toJson();
+
+            Utils.store(event.namespace, json);
+        }
+
+        event.sync = function(){
+            var data = Utils.store(event.namespace);
+
+            data.name   = data.name   || 'Evento';
+            data.price  = data.price  || 0;
+            data.items  = data.items  || [];
+            data.guests = data.guests || [];
+
+            this.data.name(data.name);
+            this.data.price(data.price);
+            this.data.items(data.items);
+
+            data.guests.forEach(function(guestName){
+                event.data.guests.push(new Guest (guestName) );                
+            });
+        }
+
+        event.toJson = function(){
+            var data = {};
+
+            data.guests = this.data.guests().map(function(guest){return guest.name });
+            data.items  = this.data.items();
+            data.name   = this.data.name();
+            data.price  = this.data.price();
+
+            return data;
+        }
+    }
+
+    window.party = new Event();
+    party.sync();
+
+    ko.applyBindings(party, $('#event').get(0) );
+
+    // party.data.items.push({name : "Whiskie"});
+    // party.data.items.push({name : "Vodka"});
+</script>
+</body>

@@ -1,0 +1,32 @@
+<html>
+<head>
+	<script type="text/javascript" src="static/jquery-1.9.0.js"></script>
+	<script type="text/javascript" src="static/mustache.js"></script>	
+	
+	<script>
+	$(document).ready(function() {
+     
+      var person = {
+          nombre: "Arturo",
+          apellido: "Jamaica",
+          url: "http://mejorando.la"
+      };
+      var template = "<h1>{{nombre}} {{apellido}}</h1>Blog: {{url}}";
+      var html = Mustache.to_html(template, person);
+      $('#ejemplo').html(html);
+      console.log(html);
+      
+      
+     });
+     </script>
+	
+	<script type="text/javascript">
+	
+	</script>
+</head>
+<body>
+    <div id="ejemplo"></div>
+
+
+</body>
+</html>
