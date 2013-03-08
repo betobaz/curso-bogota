@@ -1,2 +1,0 @@
-http://chris.photobooks.com/json/
-json visualizer
