@@ -1,18 +1,13 @@
 {
-    "name": "curso",
-    "version": "0.0.1-2",
-    "dependencies": {
-        "express": "3.1.x",
-        "jade": "0.28.2",
-        "swig": "*",
-        "consolidate": "*",
-        "socket.io": "*"
-    },
-    "scripts": {
-        "start": "server.js"
-    },
-    "engines": {
-        "node": "0.8.x"
-    },
-    "subdomain": "siedrix6.curso.siedrix6"
+    "name" : "faye",
+    "version" : "0.0.1",
+    "dependencies" : {
+        "faye" : "0.8.9",
+        "socket.io" : "*",
+        "express" :"3.1.0",
+        "consolidate" : "0.8.0",
+        "jade" : "0.28.2",
+        "swig" : "*",
+        "validator"    : "*"    
+    }
 }

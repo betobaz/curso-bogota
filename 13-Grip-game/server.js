@@ -1,38 +1,46 @@
-var express = require('express');
-var app     = express();
-var server  = require('http').createServer(app);
-var io      = require('socket.io').listen(server);
+var http     = require('http'), 
+	express  = require('express'),
+	pony     = require('socket.io'),
+	cons     = require('consolidate'),
+	swig     = require('swig'),
+	sanitize = require('validator').sanitize;
 
-var cons = require('consolidate');
+var app      = express();
+var server   = http.createServer(app);
+var io       = pony.listen(server);
 
-var users = {}
-
-server.listen(3000);
-
-app.engine('.html', cons.jade);
-app.set('view engine', 'html');
+var users = {};
 
 app.use(express.static('./public'));
 
+swig.init({
+	cache : false
+});
+
+app.engine('.html', cons.swig);
+app.set('view engine','html');
+app.set('views', './views');
+
 app.get('/', function (req, res) {
-	res.render('index',{
-		titulo : 'Applicacion Grip',
-		users  : users
+	res.render('home', {
+		titulo : 'grid game'
 	});
 });
 
-var connection = function(socket){
-	console.log('connect', Object.keys(users) );
-		
+io.sockets.on('connection', function(socket){
+	console.log('socket', socket.store.id);
+
+	socket.emit('init',users)
+
 	socket.on('move', function(user){
 		users[user.id] = user;
-		socket.broadcast.emit('move', user);
+		socket.broadcast.emit('move',user);
 	});
 
-	socket.on('disconnect', function(){
+	socket.on('disconect', function(){
 		delete users[socket.store.id];
-		io.sockets.emit('remove', {id:socket.store.id});
+		socket.broadcast.emit('remove', {id: socket.store.id})
 	});
-}
+});
 
-io.sockets.on('connection', connection)
+server.listen(3000);
