@@ -1,0 +1,18 @@
+{
+    "name": "curso",
+    "version": "0.0.1-2",
+    "dependencies": {
+        "express": "3.1.x",
+        "jade": "0.28.2",
+        "swig": "*",
+        "consolidate": "*",
+        "socket.io": "*"
+    },
+    "scripts": {
+        "start": "server.js"
+    },
+    "engines": {
+        "node": "0.8.x"
+    },
+    "subdomain": "siedrix6.curso.siedrix6"
+}
