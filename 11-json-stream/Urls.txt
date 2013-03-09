@@ -1,2 +1,0 @@
-Peer
-https://npmjs.org/package/peer
