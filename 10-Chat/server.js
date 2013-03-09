@@ -56,5 +56,5 @@ app.get('/mensajes/list', function(req, res){
 /* nuestra app escuchara por el puerto 3000 */
 app.listen(3000);
 /* mandamos un mensaje a la consola que nos informa que la app esta funcionando */
-console.log('Applicacion funcionando');
+console.log('Applicacion funcionando en el Puerto 3000');
 
