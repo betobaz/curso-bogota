@@ -1,21 +1,27 @@
 $(document).ready(function () {
-	window.client = new Faye.Client("/faye",{retry:5});
+	$('#create').click(function(){
+		if( $('#chat-room').val() ){
+			window.location = '/' + $('#chat-room').val();
+		}
+	});
 
-	$('#enviar-mensaje').click(function(){
-		var msg = $('textarea').val();
+	if(Faye){
+		window.client = new Faye.Client('/faye',{retry:5});
 
-		if(!msg) return;
+		$('#enviar').click(function(){
+			if( $('#mensaje').val() ){
+				client.publish(window.location.pathname,{
+					text : $('#mensaje').val()
+				});
+			}
 
-		console.log(msg)
-
-		client.publish(window.location.pathname, {
-			text: msg
+			$('#mensaje').val('');
 		});
 
-		$('textarea').val('');
-	});
+		client.subscribe(window.location.pathname, function(mensaje){
+			$('#mensajes').prepend('<li>'+mensaje.text+'</li>');
+		});
 
-	client.subscribe(window.location.pathname, function(message) {
-		$('#chat').append('<li>'+message.text+'</li>')
-	});
+
+	}
 });
