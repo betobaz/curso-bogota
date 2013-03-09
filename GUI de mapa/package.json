@@ -4,6 +4,7 @@
 	"dependencies" : {
 		"express" : "*",
 		"swig" : "*",
-		"consolidate" : "*"
+		"consolidate" : "*",
+		"mongoose":"*"
 	}
 }

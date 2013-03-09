@@ -1,8 +1,18 @@
-var express = require('express'),
-	http    = require('http'),
-	pony    = require('socket.io'),
-	cons    = require('consolidate'),
-	swig    = require('swig');
+var express  = require('express'),
+	http     = require('http'),
+	pony     = require('socket.io'),
+	cons     = require('consolidate'),
+	swig     = require('swig'),
+	mongoose = require('mongoose');
+
+mongoose.connect('localhost', 'maps');
+
+var Schema = mongoose.Schema;
+var Marks  = mongoose.model('Mark', Schema({ 
+	title : 'string',
+	ib    : 'string',
+	jb    : 'string'
+}));
 
 var app    = express();
 var server = http.createServer(app);
@@ -30,15 +40,21 @@ app.get('/',function (req, res) {
 });
 
 app.post('/mark/new', function(req, res){
-	marks.push({
+	var mark = new Marks({
 		title : req.body.title,
 		ib    : req.body.ib,
 		jb    :req.body.jb
 	});
 
-	console.log('mark saved');
-
-	res.send(200);
+	mark.save(function(err){
+		if(err){
+			res.send(500);
+			console.log('err :', err);
+		}else{
+			console.log('mark saved', mark);
+			res.send(200);
+		}
+	});
 });
 
 io.sockets.on('connection', function(socket){
