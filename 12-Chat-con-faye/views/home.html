@@ -1,0 +1,18 @@
+<html>
+<head>
+	<title>Chat del curso</title>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function () {
+		$('button').click(function(){
+			window.location = '/'+$('input').val();
+		});
+	});
+	</script>
+</head>
+<body>
+	<h1>Crea un chat room</h1>
+	<input id="chat-room"/>
+	<button>Crear</button>
+</body>
+</html>

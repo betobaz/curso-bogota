@@ -1,0 +1,11 @@
+{
+    "name": "chat-con-faye",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "*",
+        "jade": "*",
+        "swig": "*",
+        "consolidate": "*",
+        "faye": "*"
+    }
+}
