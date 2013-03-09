@@ -4,7 +4,42 @@
     <script type='text/javascript' src='/static/knockout-2.2.1.debug.js'></script>
 </head>
 <body>
-    <div id="event"></div>
-    <script type="text/html" id="template"></script>
-    <script type="text/javascript"></script>
+    <div id="event">
+		<div data-bind="template: { name: 'event-template', data: data }"></div>
+    </div>
+    <script type="text/html" id="event-template">
+    	<h3 data-bind="text: name"></h3>
+    	<div data-bind="foreach: assistentes">
+        	<div data-bind="text: name">
+        </div>
+        <form data-bind="submit: addGuest">
+	        <input name="name" placeholder="Quien mas va?"/>
+	        <button type="submit">Submit</button>
+	    </form>
+    </div> 
+    </script>
+    <script type="text/javascript">
+    var json = {
+    	name : "Curso Mejorandola",
+    	assistentes : [
+    		{name : "Daniel Zavala"},
+    		{name : "Freddy Vega"}
+    	]
+    }
+
+    var Evento = function (config) {
+    	this.data = {
+    		name : ko.observable(config.data.name),
+    		assistentes : ko.observableArray(config.data.assistentes),
+    	}
+
+		this.addGuest = function(form){
+			debugger;
+		}
+    }
+
+    var evento = new Evento({data: json});
+
+    ko.applyBindings(evento, $('#event').get(0) );
+    </script>
 </body>

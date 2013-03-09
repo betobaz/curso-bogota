@@ -6,15 +6,21 @@
 	<script>
 	$(document).ready(function() {
      
-      var person = {
+      var persons = {persons :[{
           nombre: "Arturo",
           apellido: "Jamaica",
           url: "http://mejorando.la"
-      };
-      var template = "<h1>{{nombre}} {{apellido}}</h1>Blog: {{url}}";
-      var html = Mustache.to_html(template, person);
-      $('#ejemplo').html(html);
+      },{
+          nombre: "Daniel",
+          apellido: "Zavala",
+          url: "http://mejorando.la"
+      }]};
+      var template = "{{#persons}}<h1>{{nombre}} {{apellido}}</h1>Blog: {{url}}{{/persons}}";
+
+      var html = Mustache.to_html(template, persons);
       console.log(html);
+      $('#ejemplo').html(html);
+      
       
       
      });
