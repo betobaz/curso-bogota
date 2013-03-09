@@ -21,38 +21,37 @@ var onReady = function () {
 		grid.pintar(user.x, user.y, user.color, user.id);
 	});
 
-		key('up, down, left, right', function(event){
-			grid.clear(user.id);
-			
-			if(event.keyIdentifier === "Right"){
-				user.x++;
-			}
+	key('up, down, left, right', function(event){
+		grid.clear(user.id);
+		
+		if(event.keyIdentifier === "Right"){
+			user.x++;
+		}
 
-			if(event.keyIdentifier === "Left"){
-				user.x--;
-			}
+		if(event.keyIdentifier === "Left"){
+			user.x--;
+		}
 
-			if(event.keyIdentifier === "Up"){
-				user.y--;
-			}
+		if(event.keyIdentifier === "Up"){
+			user.y--;
+		}
 
-			if(event.keyIdentifier === "Down"){
-				user.y++;
-			}
-			
-			grid.pintar(user.x, user.y, user.color, user.id);
-			client.emit('move', user);
-		});
+		if(event.keyIdentifier === "Down"){
+			user.y++;
+		}
+		
+		grid.pintar(user.x, user.y, user.color, user.id);
+		client.emit('move', user);
+	});
 
-		client.on('move', function(user){
-			grid.clear(user.id)
-			grid.pintar(user.x, user.y, user.color, user.id);
-		});
+	client.on('move', function(user){
+		grid.clear(user.id)
+		grid.pintar(user.x, user.y, user.color, user.id);
+	});
 
-		client.on('remove', function(user){
-			grid.clear(user.id);
-		});
-	// });
+	client.on('remove', function(user){
+		grid.clear(user.id);
+	});
 
 }
 
